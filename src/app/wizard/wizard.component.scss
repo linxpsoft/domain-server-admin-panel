@@ -1,0 +1,34 @@
+@use "@material/switch/_index" as switch;
+
+.step {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 10%;
+	left: 0;
+	display: flex;
+	align-items: center;
+	background-color: #fff;
+	transition: all 200ms;
+
+	$maxSteps: 100;
+	@for $i from 1 to $maxSteps {
+		&:nth-child(#{$i}) {
+			z-index: #{$maxSteps - $i};
+		}
+	}
+}
+
+h2 {
+	font-weight: 400;
+}
+
+::ng-deep {
+	.white-switch {
+		@include switch.toggled-on-color(#fff);
+	}
+}
+
+button {
+	padding: 24px;
+}

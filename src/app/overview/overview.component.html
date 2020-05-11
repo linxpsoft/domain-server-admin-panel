@@ -1,0 +1,79 @@
+<div class="container">
+	<h1 style="margin: 1em 0;">Overview</h1>
+	<div class="row">
+		<div class="col-md-6">
+			<h2>Users</h2>
+			<mdc-list
+				avatar
+				border
+				interactive="false"
+				style="width: 100%; padding: 0;"
+			>
+				<mdc-list-item
+					*ngFor="
+						let node of settingsService.nodes$
+							| async
+							| keyValueStartsWith: 'type':'agent'
+					"
+				>
+					<img
+						mdcListItemGraphic
+						src="https://alpha.tivolicloud.com/api/user/{{
+							node.username
+						}}/image"
+						[alt]="node.username"
+					/>
+					{{ node.username }}
+					<span style="flex-grow: 1;"></span>
+					<button
+						mdcIconButton
+						(click)="settingsService.killNode(node).subscribe()"
+					>
+						<mdc-icon>close</mdc-icon>
+					</button>
+				</mdc-list-item>
+			</mdc-list>
+		</div>
+		<div class="col-md-6">
+			<h2>Nodes</h2>
+			<mdc-data-table style="width: 100%;">
+				<table mdcDataTableTable>
+					<thead>
+						<tr mdcDataTableHeaderRow>
+							<th mdcDataTableHeaderCell>Type</th>
+							<th mdcDataTableHeaderCell>Version</th>
+							<th mdcDataTableHeaderCell>Port</th>
+							<th mdcDataTableHeaderCell>Uptime</th>
+						</tr>
+					</thead>
+					<tbody mdcDataTableContent>
+						<tr
+							mdcDataTableRow
+							*ngFor="
+								let node of settingsService.nodes$
+									| async
+									| keyValueStartsWith: 'type':'agent':true
+							"
+						>
+							<td
+								mdcDataTableCell
+								style="text-transform: capitalize;"
+							>
+								{{
+									node.type
+										.replace("-", " ")
+										.replace("-", " ")
+								}}
+							</td>
+							<td mdcDataTableCell>{{ node.version }}</td>
+							<td mdcDataTableCell>{{ node.local.port }}</td>
+							<td mdcDataTableCell>
+								{{ renderUptime(node.uptime) }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</mdc-data-table>
+		</div>
+	</div>
+</div>

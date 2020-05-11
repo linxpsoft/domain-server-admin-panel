@@ -1,0 +1,121 @@
+@use "@material/theme" with (
+	$primary: #e91e63,
+	$secondary: #e91e63,
+	$background: #fff,
+);
+
+@use "@angular-mdc/theme/material";
+
+@use "@material/typography/mdc-typography";
+
+@use "@material/button/mdc-button";
+@use "@material/card/mdc-card";
+@use "@material/checkbox/mdc-checkbox";
+@use "@material/chips/mdc-chips";
+@use "@material/data-table/mdc-data-table";
+@use "@material/drawer/mdc-drawer";
+@use "@material/form-field/mdc-form-field";
+@use "@material/icon-button/mdc-icon-button";
+@use "@material/linear-progress/mdc-linear-progress";
+@use "@material/list/mdc-list";
+@use "@material/menu/mdc-menu";
+@use "@material/menu-surface/mdc-menu-surface";
+@use "@material/select/mdc-select";
+@use "@material/snackbar/mdc-snackbar";
+@use "@material/switch/mdc-switch";
+@use "@material/tab-bar/mdc-tab-bar";
+@use "@material/tab-scroller/mdc-tab-scroller";
+@use "@material/tab-indicator/mdc-tab-indicator";
+@use "@material/tab/mdc-tab";
+@use "@material/textfield/mdc-text-field";
+
+@use "@material/snackbar/_index" as snackbar;
+
+// .mdc-list-divider,
+// .mdc-linear-progress {
+// 	display: block; // doesnt display otherwise``
+// }
+
+// standard @angular/material for the rest
+
+// @import "~@angular/material/theming";
+// @include mat-core();
+
+// $primary: mat-palette($mat-pink);
+// $accent: mat-palette($mat-pink, A200, A100, A400);
+// $warn: mat-palette($mat-red);
+// $theme: mat-light-theme($primary, $accent, $warn);
+// @include angular-material-theme($theme);
+
+@import "bootstrap/dist/css/bootstrap-grid.css";
+@import "./fonts";
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+b {
+	font-weight: 500;
+}
+
+a {
+	text-decoration: inherit;
+	// color: mat-color($mat-pink, 500);
+	color: #e91e63;
+}
+
+.alert {
+	width: fit-content;
+	padding: 16px;
+	display: flex;
+	flex-direction: row;
+
+	* {
+		margin: 0;
+	}
+
+	.material-icons {
+		margin-right: 8px;
+	}
+
+	&.warn {
+		background-color: #f44336; // red 500
+		color: #fff;
+	}
+
+	&.success {
+		background-color: #8bc34a; // light green 500
+		color: #fff;
+	}
+}
+
+.mdc-button,
+.mdc-tab__text-label {
+	text-transform: none;
+	letter-spacing: 0;
+	font-size: 1em;
+}
+
+hr {
+	border-color: rgba(0, 0, 0, 0.15);
+}
+
+.snackbar-fail {
+	@include snackbar.fill-color(#f44336);
+}
+
+.container-fluid {
+	padding: 0 32px;
+}

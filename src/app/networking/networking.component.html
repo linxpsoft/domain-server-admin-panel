@@ -1,0 +1,125 @@
+<div class="container">
+	<h1 style="margin: 1em 0;">Networking</h1>
+	<h2>External address</h2>
+	<p>This is the address that users will connect to.</p>
+	<form
+		*ngIf="!loading"
+		[formGroup]="externalAddressForm"
+		(ngSubmit)="onExternalAddressSubmit()"
+	>
+		<mdc-tab-bar
+			fixed
+			[activeTabIndex]="externalAddressForm.controls.type.value"
+			(activated)="onExternalAddressType($event)"
+		>
+			<mdc-tab-scroller>
+				<mdc-tab disabled>
+					<mdc-tab-label style="opacity: 0.8;">
+						<div
+							style="
+								text-decoration: line-through;
+								margin-bottom: 8px;
+							"
+						>
+							Fully automatic
+						</div>
+						(currently broken)
+					</mdc-tab-label>
+				</mdc-tab>
+				<mdc-tab label="Port only"></mdc-tab>
+				<mdc-tab label="Manual (address + port)"></mdc-tab>
+			</mdc-tab-scroller>
+		</mdc-tab-bar>
+		<br />
+		<div style="display: flex;">
+			<mdc-form-field>
+				<mdc-text-field
+					formControlName="address"
+					label="Address"
+					outlined
+					autocomplete="off"
+					[disabled]="externalAddressForm.controls.type.value < 2"
+				></mdc-text-field>
+				<mdc-helper-text
+					persistent
+					*ngIf="externalAddressForm.controls.type.value < 2"
+				>
+					Will be automatically updated
+				</mdc-helper-text>
+			</mdc-form-field>
+			<span style="padding: 8px;"></span>
+			<mdc-form-field>
+				<mdc-text-field
+					formControlName="port"
+					label="Port"
+					outlined
+					type="number"
+					autocomplete="off"
+					[disabled]="externalAddressForm.controls.type.value < 1"
+				></mdc-text-field>
+				<mdc-helper-text
+					persistent
+					*ngIf="externalAddressForm.controls.type.value < 1"
+				>
+					Will be automatically updated
+				</mdc-helper-text>
+			</mdc-form-field>
+		</div>
+		<br />
+		<button
+			mdc-button
+			unelevated
+			type="submit"
+			[disabled]="
+				externalAddressForm.pristine ||
+				externalAddressForm.invalid ||
+				externalAddressLoading
+			"
+		>
+			Save external address
+		</button>
+		<mdc-linear-progress
+			*ngIf="externalAddressLoading"
+			style="width: 200px; margin-top: 8px;"
+		></mdc-linear-progress>
+	</form>
+	<br />
+	<h2>Internal port</h2>
+	<p>
+		This is the port where the server is running on.
+		<br />
+		Usually 40102, +2 from this site.
+	</p>
+	<form
+		*ngIf="!loading"
+		[formGroup]="internalPortForm"
+		(ngSubmit)="onInternalPortForm()"
+	>
+		<mdc-form-field>
+			<mdc-text-field
+				formControlName="port"
+				label="Port"
+				outlined
+				type="number"
+				autocomplete="off"
+			></mdc-text-field>
+		</mdc-form-field>
+		<br />
+		<br />
+		<button
+			mdc-button
+			unelevated
+			[disabled]="
+				internalPortForm.pristine ||
+				internalPortForm.invalid ||
+				internalPortLoading
+			"
+		>
+			Save internal port
+		</button>
+		<mdc-linear-progress
+			*ngIf="internalPortLoading"
+			style="width: 200px; margin-top: 8px;"
+		></mdc-linear-progress>
+	</form>
+</div>

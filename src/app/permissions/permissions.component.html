@@ -1,0 +1,98 @@
+<div class="container-fluid">
+	<h1 style="margin: 1em 0;">Permissions</h1>
+	<mdc-data-table style="width: 100%;">
+		<table mdcDataTableTable>
+			<thead>
+				<tr mdcDataTableHeaderRow>
+					<th mdcDataTableHeaderCell></th>
+					<th mdcDataTableHeaderCell>Username</th>
+					<th mdcDataTableHeaderCell></th>
+					<th
+						mdcDataTableHeaderCell
+						*ngFor="let role of abstractPermissionKeys"
+						style="text-align: center;"
+					>
+						{{ role | prettifyCamelCase }}
+					</th>
+				</tr>
+			</thead>
+			<tbody mdcDataTableContent>
+				<tr
+					mdcDataTableRow
+					*ngFor="let user of users"
+					[formGroup]="form"
+				>
+					<td>
+						<img
+							class="avatar-image"
+							src="https://alpha.tivolicloud.com/api/user/{{
+								user.user.username
+							}}/image"
+							[alt]="user.user.username"
+						/>
+					</td>
+					<td mdcDataTableCell>
+						{{ user.user.username }}
+					</td>
+					<td mdcDataTableCell>
+						<mdc-chip *ngIf="user.user.isAdmin">
+							<mdc-chip-icon>security</mdc-chip-icon>
+							<mdc-chip-text>Admin</mdc-chip-text>
+						</mdc-chip>
+						<mdc-chip *ngIf="user.user.isCreator">
+							<mdc-chip-icon>create</mdc-chip-icon>
+							<mdc-chip-text>Creator</mdc-chip-text>
+						</mdc-chip>
+						<mdc-chip *ngIf="user.user.isBanned">
+							<mdc-chip-icon>close</mdc-chip-icon>
+							<mdc-chip-text>Banned</mdc-chip-text>
+						</mdc-chip>
+					</td>
+					<td
+						mdcDataTableCell
+						*ngFor="let control of user.controls"
+						style="text-align: center;"
+					>
+						<mdc-checkbox [formControl]="control"></mdc-checkbox>
+					</td>
+					<td mdcDataTableCell>
+						<div mdcMenuSurfaceAnchor #moreAnchor>
+							<button
+								mdc-icon-button
+								(click)="more.open = !more.open"
+							>
+								<mdc-icon>
+									settings
+								</mdc-icon>
+							</button>
+
+							<!-- <mdc-menu
+								#more
+								[anchorElement]="moreAnchor"
+								(selected)="onMenuSelect($event)"
+							>
+								<mdc-list>
+									<mdc-list-item>
+										Make admin
+									</mdc-list-item>
+								</mdc-list>
+							</mdc-menu> -->
+							<mdc-menu #more [anchorElement]="moreAnchor">
+								<mdc-list>
+									<mdc-list-item>
+										Make admin
+									</mdc-list-item>
+								</mdc-list>
+							</mdc-menu>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</mdc-data-table>
+	<br />
+	<br />
+	<button mdc-button unelevated [disabled]="form.pristine">
+		<mdc-icon>save</mdc-icon> Save
+	</button>
+</div>

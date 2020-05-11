@@ -1,0 +1,74 @@
+<div class="container-fluid">
+	<h1 style="margin: 1em 0;">Nodes</h1>
+	<mdc-data-table style="width: 100%;">
+		<table mdcDataTableTable>
+			<thead>
+				<tr mdcDataTableHeaderRow>
+					<th mdcDataTableHeaderCell>Type</th>
+					<th mdcDataTableHeaderCell>Version</th>
+					<th mdcDataTableHeaderCell>UUID</th>
+					<th mdcDataTableHeaderCell>Pool</th>
+					<th mdcDataTableHeaderCell>Username</th>
+					<th mdcDataTableHeaderCell>Public</th>
+					<th mdcDataTableHeaderCell>Local</th>
+					<th mdcDataTableHeaderCell>Uptime</th>
+					<!-- <th mdcDataTableHeaderCell>Pending credits</th> what? -->
+					<th mdcDataTableHeaderCell>Kill</th>
+				</tr>
+			</thead>
+			<tbody mdcDataTableContent>
+				<tr mdcDataTableRow *ngFor="let node of nodes">
+					<td mdcDataTableCell style="text-transform: capitalize;">
+						{{ node.type.replace("-", " ").replace("-", " ") }}
+					</td>
+					<td mdcDataTableCell>{{ node.version }}</td>
+					<td mdcDataTableCell>{{ node.uuid }}</td>
+					<td mdcDataTableCell>{{ node.pool }}</td>
+					<td mdcDataTableCell>{{ node.username }}</td>
+					<td mdcDataTableCell>
+						{{ node.public.ip }}:<b>{{ node.public.port }}</b>
+					</td>
+					<td mdcDataTableCell>
+						{{ node.local.ip }}:<b>{{ node.local.port }}</b>
+					</td>
+					<td mdcDataTableCell>{{ renderUptime(node.uptime) }}</td>
+					<td mdcDataTableCell>
+						<button
+							mdcIconButton
+							(click)="settingsService.killNode(node).subscribe()"
+						>
+							<mdc-icon>close</mdc-icon>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</mdc-data-table>
+	<br />
+	<br />
+	<button mdc-button unelevated (click)="killAllNodes()">
+		<mdc-icon>close</mdc-icon> Kill all nodes
+	</button>
+	<br />
+	<br />
+	<h1>Queued assignments</h1>
+	<mdc-data-table style="min-width: 600px;">
+		<table mdcDataTableTable>
+			<thead>
+				<tr mdcDataTableHeaderRow>
+					<th mdcDataTableHeaderCell>Type</th>
+					<th mdcDataTableHeaderCell>UUID</th>
+					<!-- <th mdcDataTableHeaderCell>Pool</th> doesnt seem to show anything -->
+				</tr>
+			</thead>
+			<tbody mdcDataTableContent>
+				<tr mdcDataTableRow *ngFor="let queued of queuedAssignments">
+					<td mdcDataTableCell style="text-transform: capitalize;">
+						{{ queued.type.replace("-", " ").replace("-", " ") }}
+					</td>
+					<td mdcDataTableCell>{{ queued.uuid }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</mdc-data-table>
+</div>

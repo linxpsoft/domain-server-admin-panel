@@ -1,0 +1,83 @@
+<mdc-drawer>
+	<mdc-drawer-header
+		class="header"
+		*ngIf="domain"
+		[ngStyle]="{
+			backgroundImage:
+				'linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://alpha.tivolicloud.com/api/domain/' +
+				domain.id +
+				'/image)'
+		}"
+	>
+		<span class="title">
+			<h2>{{ domain.label }}</h2>
+			<p>{{ domain.username }}</p>
+		</span>
+	</mdc-drawer-header>
+	<div
+		*ngIf="domain && public != null"
+		class="alt-header"
+		[class.public]="public"
+		[class.private]="!public"
+	>
+		<mdc-icon>{{ public ? "public" : "lock" }}</mdc-icon>
+		<h3>
+			{{ public ? "Public" : "Private" }} - {{ domain.numUsers }} users
+		</h3>
+	</div>
+	<mdc-drawer-content>
+		<mdc-list [singleSelection]="false">
+			<a
+				mdc-list-item
+				routerLink="/overview"
+				routerLinkActive="mdc-list-item--activated"
+			>
+				<mdc-icon mdcListItemGraphic>home</mdc-icon> Overview
+			</a>
+			<mdc-list-divider></mdc-list-divider>
+			<h6 mdcListGroupSubheader>Settings</h6>
+			<a mdc-list-item>
+				<mdc-icon mdcListItemGraphic>public</mdc-icon> World settings
+			</a>
+			<a
+				mdc-list-item
+				routerLink="/permissions"
+				routerLinkActive="mdc-list-item--activated"
+			>
+				<mdc-icon mdcListItemGraphic>
+					supervised_user_circle
+				</mdc-icon>
+				Permissions
+			</a>
+			<a mdc-list-item>
+				<mdc-icon mdcListItemGraphic>restore</mdc-icon> Backups
+			</a>
+			<a mdc-list-item>
+				<mdc-icon mdcListItemGraphic>graphic_eq</mdc-icon> Audio
+			</a>
+
+			<a
+				mdc-list-item
+				routerLink="/networking"
+				routerLinkActive="mdc-list-item--activated"
+			>
+				<mdc-icon mdcListItemGraphic>router</mdc-icon>
+				Networking
+			</a>
+			<mdc-list-divider></mdc-list-divider>
+			<h6 mdcListGroupSubheader>Advanced</h6>
+
+			<a
+				mdc-list-item
+				routerLink="/nodes"
+				routerLinkActive="mdc-list-item--activated"
+			>
+				<mdc-icon mdcListItemGraphic>layers</mdc-icon> Nodes
+			</a>
+			<a mdc-list-item>
+				<mdc-icon mdcListItemGraphic>code</mdc-icon>
+				Scripts
+			</a>
+		</mdc-list>
+	</mdc-drawer-content>
+</mdc-drawer>

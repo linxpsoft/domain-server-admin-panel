@@ -1,0 +1,11 @@
+<div class="loading" *ngIf="loading">
+	<h1>Loading...</h1>
+	<br />
+	<mdc-linear-progress></mdc-linear-progress>
+</div>
+<div class="app" *ngIf="!loading">
+	<app-sidebar *ngIf="wizard.completed_once"></app-sidebar>
+	<div class="content">
+		<router-outlet></router-outlet>
+	</div>
+</div>

@@ -1,0 +1,146 @@
+<div #intro class="step">
+	<div class="container">
+		<h1>Hooray! Your Tivoli server is up and running 🎉</h1>
+		<h2>
+			Before you can visit your newly created world, you will need to
+			complete this small setup
+		</h2>
+		<button mdc-button unelevated (click)="closeStep(intro)">
+			Let's get started
+		</button>
+	</div>
+</div>
+<div #accessTokenStep class="step">
+	<div class="container">
+		<h2 style="font-weight: 500;">Step 1/2</h2>
+		<h1>Connect this server to your Tivoli account</h1>
+		<hr />
+		<h2 style="opacity: 0.5;">
+			This may seem a little complicated right now, but it will change in
+			the future.
+		</h2>
+		<h2>
+			You will need to <b>create a new world</b> on your Tivoli account in
+			<a
+				style="font-weight: 500;"
+				href="https://alpha.tivolicloud.com/user/worlds"
+				target="_blank"
+			>
+				My worlds
+			</a>
+		</h2>
+		<h2>Once you have the <b>access token</b>, paste it down below!</h2>
+		<form [formGroup]="accessTokenForm">
+			<mdc-form-field>
+				<mdc-text-field
+					required
+					outlined
+					formControlName="accessToken"
+					label="Access token"
+					style="width: 100%;"
+					autocomplete="off"
+				></mdc-text-field>
+				<mdc-helper-text validation>
+					<span
+						*ngIf="
+							accessTokenForm.controls['accessToken'].hasError(
+								'invalid'
+							)
+						"
+					>
+						Access token is invalid
+					</span>
+				</mdc-helper-text>
+			</mdc-form-field>
+		</form>
+	</div>
+</div>
+<div #permissionsStep class="step">
+	<div class="container">
+		<h2 style="font-weight: 500;">Step 2/2</h2>
+		<h1>Set up permissions for you and your world</h1>
+		<hr />
+		<h2>
+			Is your world <b>private and whitelisted</b> or
+			<b>publicly visible</b>
+		</h2>
+		<form [formGroup]="permissionsForm">
+			<mdc-card
+				class="alert"
+				[class.warn]="!permissionsForm.controls['public'].value"
+				[class.success]="permissionsForm.controls['public'].value"
+				style="align-items: center;"
+			>
+				<mdc-icon>lock</mdc-icon>
+				<h3>Private</h3>
+				<mdc-switch
+					class="white-switch"
+					formControlName="public"
+					style="margin: 0 32px;"
+				></mdc-switch>
+				<mdc-icon>public</mdc-icon>
+				<h3>Public</h3>
+			</mdc-card>
+		</form>
+		<h2>
+			Please write the <b>usernames</b> who you give
+			<b>admin rights</b> to
+		</h2>
+		<mdc-list
+			avatar
+			interactive="false"
+			style="width: 364px;"
+			[style.padding]="admins.length == 0 ? '0px' : '8px'"
+		>
+			<mdc-list-item
+				*ngFor="let username of admins; index as i"
+				style="padding: 0;"
+			>
+				<img
+					mdcListItemGraphic
+					src="https://alpha.tivolicloud.com/api/user/{{
+						username
+					}}/image"
+					[alt]="username"
+				/>
+				{{ username }}
+				<span style="flex-grow: 1;"></span>
+				<button mdcIconButton (click)="admins.splice(i, 1)">
+					<mdc-icon>close</mdc-icon>
+				</button>
+			</mdc-list-item>
+		</mdc-list>
+		<div style="display: flex; align-items: center;">
+			<mdc-text-field
+				#username
+				outlined
+				dense
+				label="Username"
+				autocomplete="off"
+				style="width: 300px; margin-right: 8px;"
+				(keydown)="addAdmin(username, $event)"
+			>
+				<mdc-icon mdcTextFieldIcon leading>account_circle</mdc-icon>
+			</mdc-text-field>
+			<button mdcIconButton (click)="addAdmin(username)">
+				<mdc-icon>add</mdc-icon>
+			</button>
+		</div>
+		<br />
+		<br />
+		<button
+			mdc-button
+			unelevated
+			(click)="onComplete()"
+			[disabled]="loading"
+		>
+			Complete setup!
+		</button>
+		<br />
+		<br />
+		<mdc-linear-progress
+			style="width: 200px;"
+			*ngIf="loading"
+		></mdc-linear-progress>
+	</div>
+</div>
